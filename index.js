@@ -174,7 +174,7 @@ $(document).ready(async function() {
     deck.forEach(src => {
       const $card = $('<div>').addClass('card');
       $('<img>').addClass('front_face').attr('src', src).appendTo($card);
-      $('<img>').addClass('back_face').attr('src', 'back.webp').appendTo($card);
+      $('<img>').addClass('back_face').attr('src', 'BackOfCard.png').appendTo($card);
       $('#game_grid').append($card);
     });
   }
