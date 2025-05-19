@@ -1,14 +1,14 @@
 // index.js
-$(document).ready(async function() {
-  let firstCard    = null,
-      secondCard   = null,
-      boardLocked  = false,
-      moves        = 0,
-      matchedPairs = 0,
-      totalPairs   = 0,
-      timerInterval= null,
-      timeLeft     = 0,
-      allPokemon   = [];
+$(document).ready(async function () {
+  let firstCard = null,
+    secondCard = null,
+    boardLocked = false,
+    moves = 0,
+    matchedPairs = 0,
+    totalPairs = 0,
+    timerInterval = null,
+    timeLeft = 0,
+    allPokemon = [];
 
   function shuffle(a) {
     for (let i = a.length - 1; i > 0; i--) {
@@ -49,8 +49,8 @@ $(document).ready(async function() {
 
     if (img1 === img2) {
       firstCard.add(secondCard)
-               .addClass('matched')
-               .off('click');
+        .addClass('matched')
+        .off('click');
       matchedPairs++;
       resetTurn();
       updateStatus();
@@ -87,10 +87,12 @@ $(document).ready(async function() {
     clearInterval(timerInterval);
     boardLocked = true;
     $('.card').off('click');
-    setTimeout(() => {
-      alert(won ? 'You win!' : 'Time’s up!');
-    }, 200);
+    $('#gameMessage')
+      .removeClass('win lose')
+      .addClass(won ? 'win' : 'lose')
+      .text(won ? 'You win!' : 'Time’s up!');
   }
+
 
   async function startGame() {
     clearInterval(timerInterval);
@@ -100,15 +102,16 @@ $(document).ready(async function() {
 
     const diff = $('#difficulty').val();
     let pairs, timeLimit;
-    if (diff === 'easy')       [pairs, timeLimit] = [3,  60];
-    else if (diff === 'medium') [pairs, timeLimit] = [6,  90];
-    else                        [pairs, timeLimit] = [9, 120];
+    if (diff === 'easy') [pairs, timeLimit] = [3, 60];
+    else if (diff === 'medium') [pairs, timeLimit] = [6, 90];
+    else[pairs, timeLimit] = [9, 120];
 
     totalPairs = pairs;
     await generateBoardFromAPI(pairs);
     updateStatus();
     setupCards();
     startTimer(timeLimit);
+    $('#gameMessage').empty();
   }
 
   function resetGame() {
@@ -116,7 +119,8 @@ $(document).ready(async function() {
     $('#game_grid').empty();
     moves = matchedPairs = 0;
     updateStatus();
-    $('#timer').text(`Time: 0`);
+    $('#timer').text('Time: 0');
+    $('#gameMessage').empty();
   }
 
   function toggleTheme() {
@@ -136,9 +140,14 @@ $(document).ready(async function() {
   }
 
   async function loadPokemonList() {
-    const res  = await fetch('https://pokeapi.co/api/v2/pokemon?limit=1500');
+    const res = await fetch('https://pokeapi.co/api/v2/pokemon?limit=1500');
     const data = await res.json();
-    allPokemon = data.results;
+    allPokemon = data.results.filter(poke => {
+      const match = poke.url.match(/\/pokemon\/(\d+)\//);
+      if (!match) return false;
+      const id = parseInt(match[1], 10);
+      return id <= 1025;
+    });
   }
 
   function pickRandomPokemon(n) {
@@ -152,19 +161,19 @@ $(document).ready(async function() {
   }
 
   async function fetchArtwork(poke) {
-    const res  = await fetch(poke.url);
+    const res = await fetch(poke.url);
     const data = await res.json();
     return (
       data.sprites.other['official-artwork'].front_default ||
-      data.sprites.front_default  ||
-      ''
+      data.sprites.front_default ||
+      'https://via.placeholder.com/120x168?text=No+Image'
     );
   }
 
   async function generateBoardFromAPI(pairCount) {
-    const picks  = pickRandomPokemon(pairCount);
+    const picks = pickRandomPokemon(pairCount);
     const images = await Promise.all(picks.map(fetchArtwork));
-    const deck   = shuffle(images.concat(images));
+    const deck = shuffle(images.concat(images));
 
     $('#game_grid')
       .empty()
@@ -186,5 +195,5 @@ $(document).ready(async function() {
   $('#reset').on('click', resetGame);
   $('#theme-toggle').on('click', toggleTheme);
   $('#peek').on('click', peekCards);
-  
+
 });

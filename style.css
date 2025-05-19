@@ -144,4 +144,19 @@ body {
 
 .card.flipped {
   transform: rotateY(180deg);
-} 
+}  
+.game-message {
+  font-size: 1.25rem;
+  font-weight: bold;
+  text-align: center;
+  min-height: 1.5em;      
+  margin-bottom: 1rem;
+}
+
+.game-message.win {
+  color: rgb(27, 214, 27);
+}
+
+.game-message.lose {
+  color: red;
+}
