@@ -1,44 +1,57 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <link rel="stylesheet" href="style.css">
-  <!-- import jQuery -->
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pokémon Memory Game</title>
+ 
+  <link 
+    href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" 
+    rel="stylesheet" 
+  />
+
+  <link rel="stylesheet" href="style.css" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="index.js"></script>
+  <script src="index.js" defer></script>
 </head>
+<body data-theme="light">
+  <header class="app-header">
+    <h1>Pokémon Memory Match</h1>
+  </header>
 
-<body>
-  <div id="game_grid">
-    <div class="card">
-      <img id="img1" class="front_face" src="001.png" alt="">
-      <img class="back_face" src="back.webp" alt="">
+  <section id="controls" class="controls" aria-label="Game Controls">
+    <div class="control-group">
+      <label for="difficulty">Difficulty</label>
+      <select id="difficulty">
+        <option value="easy">Easy (3 pairs, 60s)</option>
+        <option value="medium">Medium (6 pairs, 90s)</option>
+        <option value="hard">Hard (9 pairs, 120s)</option>
+      </select>
     </div>
-    <div class="card">
-      <img id="img2" class="front_face" src="002.png" alt="">
-      <img class="back_face" src="back.webp" alt="">
+    <div class="control-group">
+      <button id="start">Start Game</button>
+      <button id="reset">Reset Game</button>
     </div>
-    <div class="card">
-      <img id="img3" class="front_face" src="003.png" alt="">
-      <img class="back_face" src="back.webp" alt="">
+    <div class="control-group">
+      <button id="peek">Reveal Cards</button>
+      <button id="theme-toggle">Toggle Theme</button>
     </div>
-    <div class="card">
-      <img id="img4" class="front_face" src="001.png" alt="">
-      <img class="back_face" src="back.webp" alt="">
-    </div>
-    <div class="card">
-      <img id="img5" class="front_face" src="002.png" alt="">
-      <img class="back_face" src="back.webp" alt="">
-    </div>
-    <div class="card">
-      <img id="img6" class="front_face" src="003.png" alt="">
-      <img class="back_face" src="back.webp" alt="">
-    </div>
-  </div>
+  </section>
+
+  <section id="status" class="status" aria-label="Game Status">
+    <span id="moves">Moves: 0</span>
+    <span id="pairsLeft">Pairs Left: 0</span>
+    <span id="timer">Time: 0</span>
+  </section>
+
+  <main id="game_grid" class="game-grid" role="grid" aria-label="Game Board"> 
+  </main>
+
+  <footer class="app-footer">
+    <br />
+    <p>Data provided by <a href="https://pokeapi.co" target="_blank" rel="noopener">PokéAPI</a></p>
+  </footer>
 </body>
-
 </html>
