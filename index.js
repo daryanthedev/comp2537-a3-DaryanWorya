@@ -1,4 +1,4 @@
-// index.js
+ 
 $(document).ready(async function () {
   let firstCard = null,
     secondCard = null,
