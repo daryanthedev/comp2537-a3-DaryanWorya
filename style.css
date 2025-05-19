@@ -21,10 +21,7 @@
   --shadow-light: rgba(255,255,255,0.1);
   --shadow-dark: rgba(0,0,0,0.7);
 }
-
-/*────────────────────────────────────────────────────────
-  Global Reset & Base Styles
-────────────────────────────────────────────────────────*/
+ 
 * {
   box-sizing: border-box;
   margin: 0;
@@ -46,10 +43,7 @@ body {
   padding: 1rem;
   transition: background 0.3s, color 0.3s;
 }
-
-/*────────────────────────────────────────────────────────
-  Controls & Status Bar
-────────────────────────────────────────────────────────*/
+ 
 #controls,
 #status {
   display: flex;
@@ -93,7 +87,7 @@ body {
 #game_grid {
   display: grid;
   gap: 0.6rem;
-  justify-content: center;           /* center fixed-width cards */
+  justify-content: center;          
 }
 
 #game_grid.easy   { grid-template-columns: repeat(3, 120px); }
